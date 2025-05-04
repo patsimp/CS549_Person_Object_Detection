@@ -1,51 +1,70 @@
-from pathlib import Path
-import matplotlib.pyplot as plt
-import torch
-from torchvision import transforms, datasets
+from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 
-# ==== Paths ====
-BASE_DIR = Path(__file__).resolve().parents[1]
-DATA_DIR = BASE_DIR / "data"
-
-# ==== Image Transformations ====
-IMAGENET_MEAN = [0.485, 0.456, 0.406]
-IMAGENET_STD = [0.229, 0.224, 0.225]
-
-train_transforms = transforms.Compose([
-    transforms.Resize((224, 224)),
-    transforms.RandomHorizontalFlip(),
-    transforms.RandomRotation(15),
-    transforms.ToTensor(),
-    transforms.Normalize(IMAGENET_MEAN, IMAGENET_STD),
+# 1. Define the 128×128 preprocessing transforms
+preprocess_128 = transforms.Compose([
+    transforms.Resize((128, 128)),      # upscale from 28×28 → 128×128
+    transforms.ToTensor(),              # [0,255] PIL → [0.0,1.0] Tensor, shape [1,H,W]
+    transforms.Normalize((0.5,), (0.5,))# center at 0: mean=0.5, std=0.5 for single channel
 ])
 
-# ==== Dataset & DataLoader ====
-train_dataset = datasets.ImageFolder(root=DATA_DIR / "train", transform=train_transforms)
-train_loader = DataLoader(train_dataset, batch_size=8, shuffle=True)
+# 2. Load FashionMNIST with these transforms
+train_dataset = datasets.FashionMNIST(
+    root="data/",
+    train=True,
+    download=True,
+    transform=preprocess_128
+)
+test_dataset = datasets.FashionMNIST(
+    root="data/",
+    train=False,
+    download=True,
+    transform=preprocess_128
+)
 
-# ==== Inspect First Batch ====
-images, labels = next(iter(train_loader))
-print(f"✅ Image batch shape: {images.shape}")  # (B, 3, 224, 224)
-print(f"✅ Labels: {labels}")
-print(f"✅ Tensor dtype: {images.dtype}")
-print(f"✅ Pixel range: min={images.min().item():.3f}, max={images.max().item():.3f}")
-print(f"✅ Class mapping: {train_dataset.class_to_idx}")
+# 3. Create DataLoaders
+batch_size = 32
+train_loader = DataLoader(
+    train_dataset,
+    batch_size=batch_size,
+    shuffle=True,
+    num_workers=4,
+    pin_memory=True
+)
+test_loader = DataLoader(
+    test_dataset,
+    batch_size=batch_size,
+    shuffle=False,
+    num_workers=4,
+    pin_memory=True
+)
 
-# ==== De-normalize for Visualization ====
-def denormalize(img_tensor):
-    mean = torch.tensor(IMAGENET_MEAN).view(3, 1, 1)
-    std = torch.tensor(IMAGENET_STD).view(3, 1, 1)
-    return img_tensor * std + mean
+transforms.Compose([
+  transforms.Resize((128,128)),
+  transforms.ToTensor(),                       # -> [0.0,1.0]
+  transforms.Normalize((0.5,), (0.5,))         # -> roughly [−1.0, +1.0]
+])
 
-# ==== Show Images ====
-fig, axs = plt.subplots(1, 5, figsize=(15, 3))
-for i in range(5):
-    img = denormalize(images[i]).permute(1, 2, 0).clamp(0, 1).numpy()
-    axs[i].imshow(img)
-    axs[i].set_title(f"Label: {labels[i].item()}")
-    axs[i].axis("off")
 
-plt.suptitle("🔍 Preprocessed Images (Denormalized for Viewing)")
-plt.tight_layout()
-plt.show()
+# 4. (Optional) Quick sanity check: visualize a batch
+from multiprocessing import freeze_support
+import torch
+from torch.utils.data import DataLoader
+
+
+# … your dataset and transform imports …
+
+def main():
+    # build datasets/transforms...
+    train_loader = DataLoader(train_dataset, batch_size=32,
+                              shuffle=True, num_workers=4, pin_memory=True)
+
+    # now it’s safe to fetch a batch
+    imgs, labels = next(iter(train_loader))
+    print(imgs.shape, labels.shape)
+
+
+if __name__ == "__main__":
+    freeze_support()  # on Windows, this enables spawn safely
+    main()
+
