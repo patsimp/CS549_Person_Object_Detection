@@ -19,7 +19,7 @@ SPLIT_RATIOS = {"train": 0.7, "val": 0.15, "test": 0.15}
 
 BASE_DIR   = Path(__file__).resolve().parents[1]
 RAW_DIR    = BASE_DIR / "celeba_raw"
-IMG_DIR    = RAW_DIR / "img_align_celeba"
+IMG_DIR    = RAW_DIR / "img_align_celeba" / "img_align_celeba"
 OUTPUT_DIR = BASE_DIR / "data"
 
 # ==== 1) DOWNLOAD & UNZIP via Kaggle API ====
@@ -44,6 +44,7 @@ def download_and_extract():
 
 def main():
     download_and_extract()
+    sample_and_split()
     print("\n🎉 Done! Check your data/ folder for train/val/test splits.")
 
 if __name__ == "__main__":
