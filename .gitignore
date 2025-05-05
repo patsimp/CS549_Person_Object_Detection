@@ -1,0 +1,3 @@
+# Ignore raw CelebA dataset folder
+celeba_raw/
+*.jpg
