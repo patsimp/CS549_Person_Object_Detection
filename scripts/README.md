@@ -44,18 +44,17 @@ This README explains how to download and partition the image dataset for use wit
 project-root/
 ├── data/
 │   ├── raw/                 # Downloaded images
-│   ├── train_small/         # Training set images
-│   ├── ├── person/          # 2000 face images
-│   ├── ├── object/          # 2000 object images
-│   ├── val_small/           # Validation set images
-│   ├── ├── person/          # 500 face images
-│   ├── ├── object/          # 500 object images
-│   └── test_small/          # Test set images
-│   ├── ├── person/          # 500 face images
-│   ├── ├── object/          # 500 object images
+│   ├── train/               # Training set images
+│   ├── ├── person/          # Face images
+│   ├── ├── object/          # Object images
+│   ├── val/                 # Validation set images
+│   ├── ├── person/          # Face images
+│   ├── ├── object/          # Object images
+│   └── test/                # Test set images
+│   ├── ├── person/          # Face images
+│   ├── ├── object/          # Object images
 ├── kaggledatadownload.py
 ├── kaggledatasplit.py
-├── sample_faces.py
 ├── sample_objects.py
 ├── requirements.txt
 └── README.md
