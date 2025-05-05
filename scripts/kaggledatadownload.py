@@ -44,7 +44,6 @@ def download_and_extract():
 
 def main():
     download_and_extract()
-    sample_and_split()
     print("\n🎉 Done! Check your data/ folder for train/val/test splits.")
 
 if __name__ == "__main__":
