@@ -5,8 +5,7 @@ from torchvision.datasets import CIFAR10
 from torchvision import transforms
 from PIL import Image
 
-#TODO: Resize to 64?
-def save_images(dataset, dest_dir, num_samples, resize=(218, 218)):
+def save_images(dataset, dest_dir, num_samples, resize=(64, 64)):
     os.makedirs(dest_dir, exist_ok=True)
     indices = random.sample(range(len(dataset)), num_samples)
     for i, idx in enumerate(indices):
