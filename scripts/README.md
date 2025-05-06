@@ -12,6 +12,7 @@ This README explains how to download and partition the image dataset for use wit
 
 1. **`kaggledatadownload.py`**: Downloads the raw image dataset from Kaggle.
 2. **`kaggledatasplit.py`**: Splits the downloaded dataset into training, validation, and test sets.
+4. **`sample_objects.py`**: Downloads CIFAR-10 dataset using 'torchvision.datasets' and randomly samples and resizes the object images to match the face images.
 
 ## Usage
 
@@ -42,12 +43,19 @@ This README explains how to download and partition the image dataset for use wit
 ```
 project-root/
 ├── data/
-│   ├── raw/           # Downloaded images
-│   ├── train/         # Training set images
-│   ├── val/           # Validation set images
-│   └── test/          # Test set images
+│   ├── raw/                 # Downloaded images
+│   ├── train/               # Training set images
+│   ├── ├── person/          # Face images
+│   ├── ├── object/          # Object images
+│   ├── val/                 # Validation set images
+│   ├── ├── person/          # Face images
+│   ├── ├── object/          # Object images
+│   └── test/                # Test set images
+│   ├── ├── person/          # Face images
+│   ├── ├── object/          # Object images
 ├── kaggledatadownload.py
 ├── kaggledatasplit.py
+├── sample_objects.py
 ├── requirements.txt
 └── README.md
 ```
