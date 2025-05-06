@@ -37,8 +37,11 @@ class FaceDetectionCNN(nn.Module):
         self.pool4 = nn.MaxPool2d(kernel_size=2, stride=2)
         # 8x8x128 -> 4x4x256
 
+        # Placeholder until correct size is computed
+        self.flattened_size = None
+
         # Fully Connected Layers
-        self.fc1 = nn.Linear(4 * 4 * 256, 512)
+        self.fc1 = nn.Identity()
         self.dropout = nn.Dropout(0.5)
         self.fc2 = nn.Linear(512, 1)  # Binary classification
 
@@ -58,6 +61,11 @@ class FaceDetectionCNN(nn.Module):
         # Flatten the output for the fully connected layer
         x = x.view(x.size(0), -1)
 
+        # Dynamically set fc1 the first time
+        if isinstance(self.fc1, nn.Identity):
+            self.flattened_size = x.shape[1]
+            self.fc1 = nn.Linear(self.flattened_size, 512).to(x.device)
+
         # Fully connected layers
         x = F.relu(self.fc1(x))
         x = self.dropout(x)
@@ -65,7 +73,6 @@ class FaceDetectionCNN(nn.Module):
 
         # Apply sigmoid for binary classification
         return torch.sigmoid(x)  # Output in range (0,1)
-
 
 # Test the model with a random input
 if __name__ == "__main__":
