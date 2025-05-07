@@ -31,8 +31,8 @@ VAL_OBJ_DIR.mkdir(parents=True, exist_ok=True)
 TEST_OBJ_DIR.mkdir(parents=True, exist_ok=True)
 
 # Save object images to match your face data split
-save_images(train_set, TRAIN_OBJ_DIR, 200)  # 2000
-save_images(train_set, VAL_OBJ_DIR, 50)  # 500
-save_images(test_set, TEST_OBJ_DIR, 50)  # 500
+save_images(train_set, TRAIN_OBJ_DIR, 7000)  
+save_images(train_set, VAL_OBJ_DIR, 1500)  
+save_images(test_set, TEST_OBJ_DIR, 1500)  
 
 print("🎉 CIFAR-10 object images downloaded, resized, and saved.")

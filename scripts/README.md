@@ -13,7 +13,7 @@ This README explains how to download and partition the image dataset for use wit
 1. **`kaggledatadownload.py`**: Downloads the raw image dataset from Kaggle.
 2. **`kaggledatasplit.py`**: Splits the downloaded dataset into training, validation, and test sets.
 3. **`preprocess.py`**: Processes the data by randomly sampling and resizing the person image
-4. **`sample_objects.py`**: Downloads CIFAR-10 dataset using 'torchvision.datasets' and randomly samples and resizes the object images to match the face images.
+4. **`cifardownloadandsplit.py`**: Downloads CIFAR-10 dataset using 'torchvision.datasets' and randomly samples and resizes the object images to match the face images.
 
 ## Usage
 
@@ -28,16 +28,7 @@ This README explains how to download and partition the image dataset for use wit
    * Connect to the Kaggle API using your credentials.
    * Download the specified dataset into the `data/raw/` directory.
 
-2. **Preprocess the kaggle data**
-
-   ```bash
-   python preprocess.py --max <max_num>
-   ```
-   
-   This script will:
-   * Preprocess the kaggle dataset, resize the images
-   * The "max" argument will limit the images process by randomly selecting n images to process
-3. **Partition the dataset**
+2. **Partition the dataset**
 
    ```bash
    python kaggledatasplit.py
@@ -48,6 +39,26 @@ This README explains how to download and partition the image dataset for use wit
    * Read the images from `data/raw/`.
    * Split them into `data/train/`, `data/val/`, and `data/test/` directories according to the predefined ratios.
 
+3. **Preprocess the kaggle data**
+
+   ```bash
+   python preprocess.py --max <max_num>
+   ```
+   
+   This script will:
+   * Preprocess the kaggle dataset, resize the images
+   * The "max" argument will limit the images process by randomly selecting n images to process
+
+4. **Download and Partition the CIFAR-10 dataset**
+
+   ```bash
+   python cifardownloadandsplit.py
+   ```
+   
+   This script will:
+   * Download the CIFAR-10 dataset using torchvision.datasets.
+   * Resise the object images to match the face images.
+   * Randomly sample object images and split them into `data/train/object/`, `data/val/object/`, and `data/test/object/` to match the face dataset structure.
 ## Directory Structure
 
 ```
@@ -78,5 +89,5 @@ project-root/
 
 ---
 
-
+Happy experimenting!
 

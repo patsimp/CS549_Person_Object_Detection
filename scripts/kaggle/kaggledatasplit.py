@@ -6,12 +6,12 @@ from kaggle.api.kaggle_api_extended import KaggleApi
 
 # ==== CONFIGURATION ====
 DATASET_NAME = "jessicali9530/celeba-dataset"
-MAX_SAMPLES  = 300 #TODO: Adjust values for actual training
+MAX_SAMPLES  = 10000
 SPLIT_RATIOS = {"train": 0.7, "val": 0.15, "test": 0.15}
 
 BASE_DIR   = Path(__file__).resolve().parents[2] #traverses file heirarchy backwards
 RAW_DIR    = BASE_DIR / "celeba_raw"
-IMG_DIR    = BASE_DIR / "processed"
+IMG_DIR    = RAW_DIR / "img_align_celeba" / "img_align_celeba"
 OUTPUT_DIR = BASE_DIR / "data" 
 
 
