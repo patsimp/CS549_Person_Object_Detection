@@ -28,7 +28,16 @@ This README explains how to download and partition the image dataset for use wit
    * Connect to the Kaggle API using your credentials.
    * Download the specified dataset into the `data/raw/` directory.
 
-2. **Partition the dataset**
+2. **Preprocess the kaggle data**
+
+   ```bash
+   python preprocess.py --max <max_num>
+   ```
+   
+   This script will:
+   * Preprocess the kaggle dataset, resize the images
+   * The "max" argument will limit the images process by randomly selecting n images to process
+3. **Partition the dataset**
 
    ```bash
    python kaggledatasplit.py
@@ -39,15 +48,6 @@ This README explains how to download and partition the image dataset for use wit
    * Read the images from `data/raw/`.
    * Split them into `data/train/`, `data/val/`, and `data/test/` directories according to the predefined ratios.
 
-3. **Preprocess the kaggle data**
-
-   ```bash
-   python preprocess.py --max <max_num>
-   ```
-   
-   This script will:
-   * Preprocess the kaggle dataset, resize the images
-   * The "max" argument will limit the images process by randomly selecting n images to process
 ## Directory Structure
 
 ```
@@ -78,5 +78,5 @@ project-root/
 
 ---
 
-Happy experimenting!
+
 
