@@ -7,7 +7,7 @@ This README explains the purpose and usage of the Python scripts in the `models/
 * Dataset folders (`data/train/`, `data/val/`, `data/test/`) must already be generated using the scripts in the project root.
 * Trained model will be saved to the models/ directory.
 
-## Scripts Overview
+## Models Overview
 
 1. **`face_detection.py`**: Defines the CNN model architecutre.
 2. **`train.py`**: Trains the CNN using the training and validation sets.
