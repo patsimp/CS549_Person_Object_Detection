@@ -48,6 +48,17 @@ This README explains how to download and partition the image dataset for use wit
    This script will:
    * Preprocess the kaggle dataset, resize the images
    * The "max" argument will limit the images process by randomly selecting n images to process
+
+4. **Download and Partition the CIFAR-10 dataset**
+
+   ```bash
+   python cifardownloadandsplit.py
+   ```
+   
+   This script will:
+   * Download the CIFAR-10 dataset using torchvision.datasets.
+   * Resise the object images to match the face images.
+   * Randomly sample object images and split them into `data/train/object/`, `data/val/object/`, and `data/test/object/` to match the face dataset structure.
 ## Directory Structure
 
 ```
