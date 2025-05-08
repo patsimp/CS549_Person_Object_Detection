@@ -8,24 +8,38 @@ This project aims to develop a convolutional neural network (CNN) that can accur
 
 ```
 project-root/
-├── data/
-│   ├── raw/                 # Downloaded images
-│   ├── train/               # Training set images
-│   ├── ├── person/          # Face images
-│   ├── ├── object/          # Object images
-│   ├── val/                 # Validation set images
-│   ├── ├── person/          # Face images
-│   ├── ├── object/          # Object images
-│   └── test/                # Test set images
-│   ├── ├── person/          # Face images
-│   ├── ├── object/          # Object images
-├── scripts/
-│   ├── cifar/               # CIFAR dataset scripts
-│   │   └── cifardownloadandsplit.py
-│   └── kaggle/              # Kaggle dataset scripts
-│       ├── kaggledatadownload.py
-│       └── kaggledatasplit.py
-│       └── preprocess.py     
+├── .gitignore
+├── README.md
 ├── requirements.txt
-└── README.md
+├── celeba_raw/               # (ignored by .gitignore)
+├── processed/                # (ignored by .gitignore)
+├── data/
+│   ├── README.md
+│   ├── train/               
+│   │   ├── person/          # Face images
+│   │   └── object/          # Object images
+│   ├── val/                 
+│   │   ├── person/          # Face images
+│   │   └── object/          # Object images
+│   └── test/                
+│       ├── person/          # Face images
+│       └── object/          # Object images
+├── scripts/
+│   ├── README.md
+│   ├── cifar/               
+│   │   └── cifardownloadandsplit.py
+│   └── kaggle/              
+│       ├── kaggledatadownload.py
+│       ├── kaggledatasplit.py
+│       └── preprocess.py     
+├── models/
+│   ├── README.md
+│   ├── face_detection.py
+│   ├── train.py
+│   ├── test.py
+│   ├── evaluate.py
+│   ├── best_model.pth       # (generated when model is trained)
+│   ├── training_history.png # (generated when model is trained)
+│   ├── test_outputs.npz     # (generated during model testing)
+│   └── confusion_matrix.png # (generated during model evaluation)
 ```
