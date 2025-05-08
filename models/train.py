@@ -17,8 +17,8 @@ import argparse
 from face_detection import FaceDetectionCNN
 
 # Configuration
-batch_size = 32 #TODO: Experiment with 64
-epochs = 10 #TODO: Revert ot 20
+batch_size = 32
+epochs = 10
 learning_rate = 0.001
 image_size = 64
 DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
