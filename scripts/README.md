@@ -11,8 +11,8 @@ This README explains how to download and partition the image dataset for use wit
 ## Scripts Overview
 
 1. **`kaggledatadownload.py`**: Downloads the raw image dataset from Kaggle.
-2. **`kaggledatasplit.py`**: Splits the downloaded dataset into training, validation, and test sets.
-3. **`preprocess.py`**: Processes the data by randomly sampling and resizing the person image
+2. **`preprocess.py`**: Processes the data by randomly sampling and resizing the person image
+3. **`kaggledatasplit.py`**: Splits the downloaded dataset into training, validation, and test sets.
 4. **`cifardownloadandsplit.py`**: Downloads CIFAR-10 dataset using 'torchvision.datasets' and randomly samples and resizes the object images to match the face images.
 
 ## Usage
@@ -28,7 +28,18 @@ This README explains how to download and partition the image dataset for use wit
    * Connect to the Kaggle API using your credentials.
    * Download the specified dataset into the `data/raw/` directory.
 
-2. **Partition the dataset**
+2. **Preprocess the kaggle data**
+
+   ```bash
+   python preprocess.py --max <max_num>
+   ```
+   
+   This script will:
+   * Preprocess the kaggle dataset, resize the images
+   * The "max" argument will limit the images process by randomly selecting n images to process, otherwise will process 
+   the entire dataset
+
+3. **Partition the dataset**
 
    ```bash
    python kaggledatasplit.py
@@ -38,16 +49,6 @@ This README explains how to download and partition the image dataset for use wit
 
    * Read the images from `data/raw/`.
    * Split them into `data/train/`, `data/val/`, and `data/test/` directories according to the predefined ratios.
-
-3. **Preprocess the kaggle data**
-
-   ```bash
-   python preprocess.py --max <max_num>
-   ```
-   
-   This script will:
-   * Preprocess the kaggle dataset, resize the images
-   * The "max" argument will limit the images process by randomly selecting n images to process
 
 4. **Download and Partition the CIFAR-10 dataset**
 
@@ -74,9 +75,13 @@ project-root/
 │   └── test/                # Test set images
 │   ├── ├── person/          # Face images
 │   ├── ├── object/          # Object images
-├── kaggledatadownload.py
-├── kaggledatasplit.py
-├── sample_objects.py
+├── scripts/
+│   ├── cifar/               # CIFAR dataset scripts
+│   │   └── cifardownloadandsplit.py
+│   └── kaggle/              # Kaggle dataset scripts
+│       ├── kaggledatadownload.py
+│       └── kaggledatasplit.py
+│       └── preprocess.py     
 ├── requirements.txt
 └── README.md
 ```
@@ -86,8 +91,8 @@ project-root/
 * Ensure you have sufficient disk space before downloading large datasets.
 * You can adjust the split ratios by modifying the constants at the top of `kaggledatasplit.py`.
 * For any issues, please open an issue on the project repository or contact the maintainer.
+* Kaggle scripts must be executed in the following order: kaggledatadownload.py, preprocess.py, kaggledatasplit.py
 
 ---
 
-Happy experimenting!
 
