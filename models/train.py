@@ -4,14 +4,11 @@ import torch.optim as optim
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms
 import matplotlib.pyplot as plt
-import numpy as np
 from pathlib import Path
 from PIL import Image
 import random
-import os
 import time
 from tqdm import tqdm
-import argparse
 
 # Import the model
 from face_detection import FaceDetectionCNN
@@ -33,12 +30,7 @@ MODELS_DIR.mkdir(exist_ok=True)
 # Create a custom dataset
 class FaceDetectionDataset(Dataset):
     def __init__(self, data_dir, split, transform=None):
-        """
-        Args:
-            data_dir: Path to data directory
-            split: 'train', 'val', or 'test'
-            transform: Optional transform to be applied to images
-        """
+
         self.data_dir = Path(data_dir) / split
         self.transform = transform
         self.image_paths = []
@@ -234,18 +226,12 @@ def plot_training_history(history):
 
 
 def main():
-    # Parse command line arguments
-    parser = argparse.ArgumentParser(description='Train face detection model')
-    parser.add_argument('--epochs', type=int, default=epochs, help='Number of epochs to train')
-    parser.add_argument('--batch-size', type=int, default=batch_size, help='Batch size for training')
-    parser.add_argument('--lr', type=float, default=learning_rate, help='Learning rate')
-    args = parser.parse_args()
 
     # Print configuration
     print(f'Device: {DEVICE}')
-    print(f'Epochs: {args.epochs}')
-    print(f'Batch size: {args.batch_size}')
-    print(f'Learning rate: {args.lr}')
+    print(f'Epochs: {epochs}')
+    print(f'Batch size: {batch_size}')
+    print(f'Learning rate: {learning_rate}')
 
     # Data transformations
     # For training: data augmentation
@@ -268,8 +254,8 @@ def main():
     val_dataset = FaceDetectionDataset(DATA_DIR, 'val', transform=val_transform)
 
     # Create data loaders
-    train_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True, num_workers=4)
-    val_loader = DataLoader(val_dataset, batch_size=args.batch_size, shuffle=False, num_workers=4)
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=4)
+    val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False, num_workers=4)
 
     # Initialize model
     model = FaceDetectionCNN().to(DEVICE)
@@ -277,7 +263,7 @@ def main():
 
     # Loss function and optimizer
     criterion = nn.BCELoss()
-    optimizer = optim.Adam(model.parameters(), lr=args.lr)
+    optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
     # Learning rate scheduler
     scheduler = optim.lr_scheduler.ReduceLROnPlateau(
@@ -289,7 +275,7 @@ def main():
         model=model,
         train_loader=train_loader,
         val_loader=val_loader,
-        num_epochs=args.epochs,
+        num_epochs=epochs,
         criterion=criterion,
         optimizer=optimizer,
         scheduler=scheduler

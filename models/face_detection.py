@@ -4,10 +4,6 @@ import torch.nn.functional as F
 
 
 class FaceDetectionCNN(nn.Module):
-    """
-    A 3-layer CNN for face detection with group normalization instead of batch normalization
-    to support single-sample inference.
-    """
 
     def __init__(self):
         super(FaceDetectionCNN, self).__init__()
@@ -28,7 +24,6 @@ class FaceDetectionCNN(nn.Module):
         self.conv3 = nn.Conv2d(in_channels=64, out_channels=128, kernel_size=3, padding=1)
         self.gn3 = nn.GroupNorm(num_groups=32, num_channels=128)  # Group norm
         self.pool3 = nn.MaxPool2d(kernel_size=2, stride=2)
-        # 16x16x64 -> 8x8x128
 
         # Fully Connected Layers
         self.fc1 = nn.Linear(8 * 8 * 128, 256)
@@ -60,7 +55,7 @@ class FaceDetectionCNN(nn.Module):
         x = self.dropout(x)
         x = self.fc2(x)
 
-        # Apply sigmoid for binary classification
+        # Apply sigmoid function for binary classification
         return torch.sigmoid(x)  # Output in range (0,1)
 
 
@@ -68,20 +63,12 @@ class FaceDetectionCNN(nn.Module):
 if __name__ == "__main__":
     # Create random input tensor (batch_size, channels, height, width)
     x = torch.randn(1, 3, 64, 64)
-
     # Initialize the model
     model = FaceDetectionCNN()
-
     # Print model summary
     print(model)
-
     # Forward pass
     output = model(x)
-
     # Print output shape
     print(f"Output shape: {output.shape}")
     print(f"Output value: {output.item():.4f}")  # Probability of being a person
-
-    # Calculate number of parameters
-    total_params = sum(p.numel() for p in model.parameters())
-    print(f"Total parameters: {total_params:,}")
